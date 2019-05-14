@@ -19,17 +19,17 @@ def tokenizeText(html):
     :return: array of tokens from parsed html. 
     '''
     soup = bs(html, "html5lib")
-    text = soup.get_text(strip = True)
-    print(text)
+    text = soup.text
     tokens = [t for t in text.split()]
     return tokens
 
 def calcFreqDist(tokens):
     cleaned_tokens = tokens[:]
     for token in tokens:
-        if token in stopwords.words('english'):
+        if token in stopwords.words('english') or not token.isalpha():
             cleaned_tokens.remove(token)
 
+    #print(set(tokens) - set(cleaned_tokens))
     freq = FreqDist(cleaned_tokens)
     # for key,val in freq.items():
     #     print(str(key) + ':' + str(val))
